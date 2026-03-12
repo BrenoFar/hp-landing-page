@@ -26,7 +26,7 @@ export function useCharacters(filters: Filters) {
     }
 
     load();
-  }, []); // roda só uma vez ao montar
+  }, []);
 
   const filteredCharacters = useMemo(() => {
     return characters
@@ -43,5 +43,10 @@ export function useCharacters(filters: Filters) {
       });
   }, [characters, filters]);
 
-  return { characters: filteredCharacters, loading, error };
+  return {
+    characters: filteredCharacters,
+    totalCharacters: characters.length, // ← total sem filtro
+    loading,
+    error,
+  };
 }
