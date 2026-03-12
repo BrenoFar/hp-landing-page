@@ -1,3 +1,12 @@
+//TIpografia
+$font-primary: var(--font-inter), 'Segoe UI', system-ui, sans-serif;
+$font-title: var(--font-cinzel), serif;
+$font-size-sm: 0.8rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.2rem;
+$font-size-xl: 1.6rem;
+$font-size-hero: clamp(2rem, 5vw, 3.2rem);
+
 // Cores principais
 $color-bg: #050816;
 $color-card: #0f1729;
@@ -14,14 +23,6 @@ $color-gryffindor: #ae0001;
 $color-slytherin: #1a472a;
 $color-hufflepuff: #ecb939;
 $color-ravenclaw: #0e1a40;
-
-// Tipografia
-$font-primary: 'Segoe UI', system-ui, -apple-system, sans-serif;
-$font-size-sm: 0.8rem;
-$font-size-base: 1rem;
-$font-size-lg: 1.2rem;
-$font-size-xl: 1.6rem;
-$font-size-hero: clamp(2rem, 5vw, 3.2rem);
 
 // Espaçamentos
 $spacing-xs: 0.25rem;
