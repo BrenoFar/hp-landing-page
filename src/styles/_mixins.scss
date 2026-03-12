@@ -1,0 +1,72 @@
+@use 'variables' as *;
+
+// Responsividade
+@mixin mobile {
+  @media (max-width: #{$bp-mobile}) { @content; }
+}
+
+@mixin tablet {
+  @media (max-width: #{$bp-tablet}) { @content; }
+}
+
+@mixin desktop {
+  @media (max-width: #{$bp-desktop}) { @content; }
+}
+
+// Flex helpers
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Texto truncado com reticências
+@mixin text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// Animação de skeleton loading
+@mixin skeleton-animation {
+  background: linear-gradient(
+    90deg,
+    #1a2540 25%,
+    #243050 50%,
+    #1a2540 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+// Cor de casa como badge
+@mixin house-color($house) {
+  @if $house == 'Gryffindor' {
+    background: rgba($color-gryffindor, 0.25);
+    color: lighten($color-gryffindor, 40%);
+    border: 1px solid rgba($color-gryffindor, 0.4);
+  } @else if $house == 'Slytherin' {
+    background: rgba($color-slytherin, 0.25);
+    color: lighten($color-slytherin, 50%);
+    border: 1px solid rgba($color-slytherin, 0.4);
+  } @else if $house == 'Hufflepuff' {
+    background: rgba($color-hufflepuff, 0.2);
+    color: darken($color-hufflepuff, 10%);
+    border: 1px solid rgba($color-hufflepuff, 0.4);
+  } @else if $house == 'Ravenclaw' {
+    background: rgba($color-ravenclaw, 0.4);
+    color: lighten($color-ravenclaw, 60%);
+    border: 1px solid rgba($color-ravenclaw, 0.6);
+  }
+}
