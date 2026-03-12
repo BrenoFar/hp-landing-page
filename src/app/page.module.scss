@@ -1,0 +1,54 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.main {
+  max-width: $bp-wide;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg $spacing-2xl;
+
+  @include tablet {
+    padding: $spacing-lg $spacing-md $spacing-xl;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-lg;
+
+  @include desktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Feedback (erro ou vazio)
+.feedback {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-2xl 0;
+  text-align: center;
+}
+
+.error {
+  color: $color-error;
+  font-size: $font-size-lg;
+}
+
+.empty {
+  font-size: $font-size-lg;
+  color: $color-text;
+}
+
+.emptyHint {
+  font-size: $font-size-sm;
+  color: $color-muted;
+}
