@@ -8,8 +8,8 @@ type Props = {
   onHouseChange: (value: string) => void;
   status: "all" | "alive" | "dead";
   onStatusChange: (value: "all" | "alive" | "dead") => void;
-  total: number;       // total de personagens após filtro
-  filtered: number;   // total sem filtro (para mostrar contagem)
+  total: number;     // total de personagens após filtro
+  filtered: number;  // total sem filtro (para mostrar contagem)
 };
 
 export default function Filters({
@@ -36,7 +36,6 @@ export default function Filters({
 
       {/* Barra de busca */}
       <div className={styles.searchWrapper}>
-        <span className={styles.searchIcon}></span>
         <input
           type="text"
           placeholder="Buscar por nome..."
@@ -61,7 +60,7 @@ export default function Filters({
         <select
           value={house}
           onChange={(e) => onHouseChange(e.target.value)}
-          className={styles.select}
+          className={`${styles.select} ${house !== "all" ? styles.active : ""}`} /*  borda ativa */
         >
           <option value="all">Todas as casas</option>
           <option value="Gryffindor"> Gryffindor</option>
@@ -73,11 +72,11 @@ export default function Filters({
         <select
           value={status}
           onChange={(e) => onStatusChange(e.target.value as "all" | "alive" | "dead")}
-          className={styles.select}
+          className={`${styles.select} ${status !== "all" ? styles.active : ""}`} /* borda ativa */
         >
           <option value="all">Todos os status</option>
-          <option value="alive">Vivos</option>
-          <option value="dead">Falecidos</option>
+          <option value="alive"> Vivos</option>
+          <option value="dead"> Falecidos</option>
         </select>
 
         {/* Botão limpar todos os filtros — só aparece se houver filtro ativo */}
