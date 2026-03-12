@@ -1,0 +1,42 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.card {
+  background: $color-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  border: 1px solid $color-border;
+}
+
+.image {
+  height: 260px;
+  @include skeleton-animation;
+}
+
+.content {
+  padding: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.title {
+  height: 20px;
+  width: 70%;
+  border-radius: $radius-sm;
+  @include skeleton-animation;
+}
+
+.line {
+  height: 14px;
+  width: 100%;
+  border-radius: $radius-sm;
+  @include skeleton-animation;
+}
+
+.lineShort {
+  height: 14px;
+  width: 50%;
+  border-radius: $radius-sm;
+  @include skeleton-animation;
+}

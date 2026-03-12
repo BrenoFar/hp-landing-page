@@ -1,0 +1,41 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.header {
+  width: 100%;
+  padding: $spacing-xl $spacing-lg;
+  background: linear-gradient(
+    180deg,
+    rgba(201, 168, 76, 0.08) 0%,
+    transparent 100%
+  );
+  border-bottom: 1px solid $color-border;
+  text-align: center;
+}
+
+.container {
+  max-width: $bp-wide;
+  margin: 0 auto;
+}
+
+.logo {
+  @include flex-center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+}
+
+.icon {
+  font-size: 2rem;
+}
+
+.title {
+  font-size: $font-size-xl;
+  font-weight: 700;
+  color: $color-primary;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-size: $font-size-base;
+  color: $color-muted;
+}
