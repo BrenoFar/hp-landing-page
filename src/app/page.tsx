@@ -1,66 +1,72 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { useCharacters } from "@/hooks/useCharacters";
+import Hero from "@/components/Hero/Hero";
+import CharacterCard from "@/components/CharacterCard/CharacterCard";
+import SkeletonCard from "@/components/SkeletonCard/SkeletonCard";
+import Filters from "@/components/Filters/Filters";
+import styles from "./page.module.scss";
+
+// Array fixo para renderizar 12 skeletons durante o loading
+const SKELETON_COUNT = Array.from({ length: 12 });
+
+export default function HomePage() {
+  const [search, setSearch] = useState("");
+  const [house, setHouse] = useState("all");
+  const [status, setStatus] = useState<"all" | "alive" | "dead">("all");
+
+  const { characters, totalCharacters, loading, error } = useCharacters({
+    search,
+    house,
+    status,
+  });
+
   return (
-    <div className={styles.page}>
+    <>
+      <Hero />
+
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+
+        <Filters
+          search={search}
+          onSearchChange={setSearch}
+          house={house}
+          onHouseChange={setHouse}
+          status={status}
+          onStatusChange={setStatus}
+          total={characters.length}
+          filtered={totalCharacters}
         />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+        {/* Erro */}
+        {error && (
+          <div className={styles.feedback}>
+            <p className={styles.error}> {error}</p>
+          </div>
+        )}
+
+        {/* Grid de cards */}
+        <section className={styles.grid}>
+          {loading
+            ? SKELETON_COUNT.map((_, i) => <SkeletonCard key={i} />)
+            : characters.map((character, index) => (
+                <CharacterCard
+                  key={`${character.name}-${index}`}  /* key única */
+                  character={character}
+                />
+              ))}
+        </section>
+
+        {/* Nenhum resultado encontrado */}
+        {!loading && !error && characters.length === 0 && (
+          <div className={styles.feedback}>
+            <p className={styles.empty}>Nenhum personagem encontrado.</p>
+            <p className={styles.emptyHint}>Tente ajustar os filtros.</p>
+          </div>
+        )}
+
       </main>
-    </div>
+    </>
   );
 }
