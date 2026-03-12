@@ -1,0 +1,117 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.wrapper {
+  max-width: $bp-wide;
+  margin: 0 auto $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+// Busca
+.searchWrapper {
+  position: relative;
+  @include flex-center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: $spacing-md;
+  font-size: $font-size-base;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: $spacing-md $spacing-xl $spacing-md 2.8rem;
+  background: $color-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  color: $color-text;
+  font-size: $font-size-base;
+  transition: border-color $transition-fast;
+
+  &::placeholder {
+    color: $color-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: rgba($color-primary, 0.5);
+  }
+}
+
+.clearInput {
+  position: absolute;
+  right: $spacing-md;
+  background: transparent;
+  border: none;
+  color: $color-muted;
+  cursor: pointer;
+  font-size: $font-size-base;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-text;
+  }
+}
+
+// Selects
+.selects {
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.select {
+  flex: 1;
+  min-width: 160px;
+  padding: $spacing-sm $spacing-md;
+  background: $color-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  color: $color-text;
+  cursor: pointer;
+  transition: border-color $transition-fast;
+
+  &:focus {
+    outline: none;
+    border-color: rgba($color-primary, 0.5);
+  }
+
+  option {
+    background: $color-card;
+  }
+}
+
+// Botão limpar tudo
+.clearAll {
+  padding: $spacing-sm $spacing-lg;
+  background: transparent;
+  border: 1px solid rgba($color-error, 0.4);
+  border-radius: $radius-md;
+  color: $color-error;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  transition: background $transition-fast, color $transition-fast;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba($color-error, 0.1);
+  }
+}
+
+// Contagem
+.count {
+  font-size: $font-size-sm;
+  color: $color-muted;
+
+  strong {
+    color: $color-primary;
+  }
+}
