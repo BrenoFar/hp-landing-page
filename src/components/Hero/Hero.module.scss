@@ -6,14 +6,16 @@
   overflow: hidden;
   text-align: center;
   padding: $spacing-2xl $spacing-lg;
-  background: radial-gradient(
-    ellipse at top,
-    rgba(201, 168, 76, 0.12) 0%,
-    rgba(5, 8, 22, 0.95) 60%
-  ),
-  linear-gradient(180deg, #0a0f24 0%, $color-bg 100%);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 8, 22, 0.70) 0%,
+      rgba(5, 8, 22, 0.95) 100%
+    ),
+    url('/images/hero-bg.jpg') center center / cover no-repeat;
   border-bottom: 1px solid $color-border;
 }
+
 
 // Estrelas animadas
 .stars {
