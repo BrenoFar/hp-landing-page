@@ -1,0 +1,100 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.main {
+  max-width: $bp-wide;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg $spacing-2xl;
+
+  @include tablet {
+    padding: $spacing-lg $spacing-md $spacing-xl;
+  }
+}
+
+.houseHeader {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  padding: $spacing-xl;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  border: 1px solid $color-border;
+  border-left: 4px solid var(--house-color);
+  border-radius: 0 $radius-lg $radius-lg 0;
+  margin-bottom: $spacing-xl;
+}
+
+.backBtn {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid $color-border;
+  color: $color-muted;
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-md;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  transition: color $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    color: $color-text;
+    border-color: $color-text;
+  }
+}
+
+.houseInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+
+  @include mobile {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.houseIconWrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid var(--house-color);
+  @include flex-center;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px var(--house-color);
+}
+
+.houseIcon {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+.houseTitle {
+  font-family: $font-title;
+  font-size: $font-size-hero;
+  margin-bottom: $spacing-xs;
+}
+
+.houseDescription {
+  color: $color-muted;
+  font-style: italic;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-lg;
+
+  @include desktop { grid-template-columns: repeat(3, 1fr); }
+  @include tablet  { grid-template-columns: repeat(2, 1fr); }
+  @include mobile  { grid-template-columns: 1fr; }
+}
+
+.feedback {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-2xl 0;
+  text-align: center;
+}
+
+.error    { color: $color-error; font-size: $font-size-lg; }
+.empty    { font-size: $font-size-lg; color: $color-text; }
+.emptyHint { font-size: $font-size-sm; color: $color-muted; }
