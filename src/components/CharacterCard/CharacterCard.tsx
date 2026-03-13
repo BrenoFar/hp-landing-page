@@ -9,13 +9,7 @@ type Props = {
   character: Character;
   priority?: boolean;
   onClick?: () => void;
-};
-
-const houseClassMap: Record<string, string> = {
-  Gryffindor: "gryffindor",
-  Slytherin: "slytherin",
-  Hufflepuff: "hufflepuff",
-  Ravenclaw: "ravenclaw",
+  houseColor?: string;
 };
 
 const houseIconMap: Record<string, string> = {
@@ -25,16 +19,26 @@ const houseIconMap: Record<string, string> = {
   Ravenclaw: "/icons/ravenclaw.svg",
 };
 
-export default function CharacterCard({ character, priority = false, onClick }: Props) {
+export default function CharacterCard({
+  character,
+  priority = false,
+  onClick,
+  houseColor = "#c9a84c",
+}: Props) {
   const { name, image, dateOfBirth, house, patronus, actor, alive } = character;
 
   const [revealed, setRevealed] = useState(false);
 
-  const houseClass = houseClassMap[house] ?? null;
   const houseIcon = houseIconMap[house] ?? null;
 
   return (
-    <article className={styles.card} onClick={onClick} role="button" tabIndex={0}>
+    <article
+      className={styles.card}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      style={{ "--card-color": houseColor } as React.CSSProperties}
+    >
 
       {/* Imagem do personagem */}
       <div className={styles.imageWrapper}>
@@ -65,7 +69,7 @@ export default function CharacterCard({ character, priority = false, onClick }: 
 
         {/* Ícone da casa sobre a imagem */}
         {houseIcon && (
-          <div className={`${styles.houseIcon} ${houseClass ? styles[houseClass] : ""}`}>
+          <div className={styles.houseIcon}> {/* ← sem houseClass */}
             <Image
               src={houseIcon}
               alt={house}
@@ -81,11 +85,10 @@ export default function CharacterCard({ character, priority = false, onClick }: 
         <header className={styles.cardHeader}>
           <h2 className={styles.name}>{name}</h2>
 
-          {/* Badge spoiler com animação de reveal */}
           <button
             className={`${styles.spoiler} ${revealed ? (alive ? styles.alive : styles.dead) : ""}`}
             onClick={(e) => {
-              e.stopPropagation(); // evita abrir o modal ao clicar no spoiler
+              e.stopPropagation();
               setRevealed((prev) => !prev);
             }}
             aria-label={revealed ? (alive ? "Vivo" : "Falecido") : "Revelar status"}
