@@ -27,7 +27,7 @@ export default function HomePage() {
     load();
   }, []);
 
-  const houseGroups  = GROUPS.filter((g) => HOUSE_KEYS.includes(g.key));
+  const houseGroups = GROUPS.filter((g) => HOUSE_KEYS.includes(g.key));
   const othersGroups = GROUPS.filter((g) => !HOUSE_KEYS.includes(g.key));
   const activeGroups = activeTab === "houses" ? houseGroups : othersGroups;
 
@@ -80,7 +80,8 @@ export default function HomePage() {
         </p>
         <p className={styles.footerLegal}>
           Harry Potter © J.K. Rowling, Warner Bros. e seus respectivos detentores de direitos.
-          <br />
+        </p>
+        <p className={styles.footerLegal}>
           Este projeto é fan-made, sem fins comerciais.
         </p>
       </footer>

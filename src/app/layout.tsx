@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "HP Characters | Harry Potter Universe",
+  title: "Harry Potter Personagens",
   description: "Explore personagens do universo mágico de Harry Potter",
 };
 
