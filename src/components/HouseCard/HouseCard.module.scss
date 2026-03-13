@@ -1,0 +1,83 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  background: $color-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  text-decoration: none;
+  color: $color-text;
+  overflow: hidden;
+  transition: transform $transition-base, box-shadow $transition-base, border-color $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--house-color);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+    .icon { transform: scale(1.1) rotate(-5deg); }
+    .arrow { transform: translateX(4px); }
+    .iconWrapper { box-shadow: 0 0 20px var(--house-color); }
+  }
+}
+
+.topBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--house-color);
+}
+
+.iconWrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  @include flex-center;
+  transition: box-shadow $transition-base;
+}
+
+.icon {
+  transition: transform $transition-base;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+}
+
+.content { flex: 1; }
+
+.title {
+  font-family: $font-title;
+  font-size: $font-size-lg;
+  margin-bottom: $spacing-xs;
+}
+
+.description {
+  font-size: $font-size-sm;
+  color: $color-muted;
+  line-height: 1.6;
+}
+
+.footer {
+  @include flex-between;
+  margin-top: auto;
+}
+
+.count {
+  font-size: $font-size-sm;
+  color: var(--house-color);
+  font-weight: 600;
+}
+
+.arrow {
+  color: $color-muted;
+  font-size: $font-size-lg;
+  transition: transform $transition-fast;
+}
