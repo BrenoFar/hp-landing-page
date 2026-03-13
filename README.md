@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HP Landing Page
 
-## Getting Started
+Catálogo interativo de personagens do universo Harry Potter, desenvolvido com Next.js 16 e TypeScript.
 
-First, run the development server:
+Este projeto foi desenvolvido como parte de um processo seletivo e também servirá como estudo e portfólio pessoal.
+
+**[Acesse a aplicação](https://brenofarhplp.vercel.app)**
+
+---
+
+## Tecnologias
+
+- [Next.js 16](https://nextjs.org/) — App Router
+- [TypeScript](https://www.typescriptlang.org/)
+- [SCSS Modules](https://sass-lang.com/)
+- [HP API](https://hp-api.onrender.com/)
+
+---
+
+## Rodando localmente
+
+### Pré-requisitos
+
+- Node.js 18+
+- npm ou yarn
+
+### Instalação
 
 ```bash
+# Clone o repositório
+git clone https://github.com/BrenoFar/hp-landing-page.git
+
+# Entre na pasta
+cd hp-landing-page
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Funcionalidades
+Listagem de personagens por casa de Hogwarts
 
-## Learn More
+Filtro por nome e status (vivo/falecido)
 
-To learn more about Next.js, take a look at the following resources:
+Modal de detalhes com informações completas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Sistema de spoiler para status do personagem
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Interface totalmente em português (PT-BR)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Design responsivo
