@@ -9,22 +9,27 @@
   gap: $spacing-md;
 }
 
+// Linha: busca + status lado a lado
+.row {
+  display: flex;
+  gap: $spacing-md;
+  align-items: center;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
 // Busca
 .searchWrapper {
   position: relative;
   @include flex-center;
-}
-
-.searchIcon {
-  position: absolute;
-  left: $spacing-md;
-  font-size: $font-size-base;
-  pointer-events: none;
+  flex: 1; // ← ocupa todo espaço disponível
 }
 
 .searchInput {
   width: 100%;
-  padding: $spacing-md $spacing-xl $spacing-md 2.8rem;
+  padding: $spacing-md $spacing-xl $spacing-md $spacing-lg;
   background: $color-card;
   border: 1px solid $color-border;
   border-radius: $radius-lg;
@@ -57,27 +62,27 @@
   }
 }
 
-// Selects
+// Selects — não encolhe, fica à direita do input
 .selects {
   display: flex;
   gap: $spacing-md;
-  flex-wrap: wrap;
+  flex-shrink: 0;
 
   @include mobile {
-    flex-direction: column;
+    width: 100%;
   }
 }
 
 .select {
-  flex: 1;
-  min-width: 160px;
-  padding: $spacing-sm $spacing-md;
+  padding: $spacing-md $spacing-lg;
   background: $color-card;
   border: 1px solid $color-border;
-  border-radius: $radius-md;
+  border-radius: $radius-lg; // ← mesmo radius do input
   color: $color-text;
   cursor: pointer;
+  font-size: $font-size-base;
   transition: border-color $transition-fast;
+  white-space: nowrap;
 
   &:focus {
     outline: none;
@@ -89,6 +94,11 @@
   }
 }
 
+.active {
+  border-color: rgba($color-primary, 0.7);
+  color: $color-primary;
+}
+
 // Botão limpar tudo
 .clearAll {
   padding: $spacing-sm $spacing-lg;
@@ -98,7 +108,7 @@
   color: $color-error;
   cursor: pointer;
   font-size: $font-size-sm;
-  transition: background $transition-fast, color $transition-fast;
+  transition: background $transition-fast;
   white-space: nowrap;
 
   &:hover {
@@ -114,9 +124,4 @@
   strong {
     color: $color-primary;
   }
-}
-
-.active {
-  border-color: rgba($color-primary, 0.7);
-  color: $color-primary;
 }
