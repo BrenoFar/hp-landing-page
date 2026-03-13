@@ -59,11 +59,11 @@
   border: 2px solid var(--house-color);
   @include flex-center;
   flex-shrink: 0;
-  box-shadow: 0 0 20px var(--house-color);
+  box-shadow: 0 0 6px var(--house-color);
 }
 
 .houseIcon {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+  filter: none;
 }
 
 .houseTitle {
