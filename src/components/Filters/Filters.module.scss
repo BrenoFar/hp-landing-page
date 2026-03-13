@@ -17,6 +17,7 @@
 
   @include mobile {
     flex-direction: column;
+    align-items: stretch;
   }
 }
 
@@ -24,7 +25,11 @@
 .searchWrapper {
   position: relative;
   @include flex-center;
-  flex: 1; // ← ocupa todo espaço disponível
+  flex: 1;
+
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .searchInput {
@@ -62,7 +67,7 @@
   }
 }
 
-// Selects — não encolhe, fica à direita do input
+// Selects
 .selects {
   display: flex;
   gap: $spacing-md;
@@ -77,12 +82,13 @@
   padding: $spacing-md $spacing-lg;
   background: $color-card;
   border: 1px solid $color-border;
-  border-radius: $radius-lg; // ← mesmo radius do input
+  border-radius: $radius-lg;
   color: $color-text;
   cursor: pointer;
   font-size: $font-size-base;
   transition: border-color $transition-fast;
   white-space: nowrap;
+  flex: 1;
 
   &:focus {
     outline: none;
