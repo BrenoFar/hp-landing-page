@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react"; // ← useEffect adicionado
 import Image from "next/image";
 import { Character } from "@/types/character";
 import { formatDate } from "@/utils/format";
@@ -11,6 +11,7 @@ type Props = {
   priority?: boolean;
   onClick?: () => void;
   houseColor?: string;
+  revealStatus?: boolean;
 };
 
 const houseIconMap: Record<string, string> = {
@@ -25,10 +26,16 @@ export default function CharacterCard({
   priority = false,
   onClick,
   houseColor = "#c9a84c",
+  revealStatus = false,
 }: Props) {
   const { name, image, dateOfBirth, house, patronus, actor, alive } = character;
 
-  const [revealed, setRevealed] = useState(false);
+  const [revealed, setRevealed] = useState(revealStatus);
+
+  // Sincroniza quando o filtro muda na página pai
+  useEffect(() => {
+    setRevealed(revealStatus);
+  }, [revealStatus]);
 
   const houseIcon = houseIconMap[house] ?? null;
 
@@ -41,7 +48,6 @@ export default function CharacterCard({
       style={{ "--card-color": houseColor } as React.CSSProperties}
     >
 
-      {/* Imagem do personagem */}
       <div className={styles.imageWrapper}>
         {image ? (
           <Image
@@ -70,17 +76,11 @@ export default function CharacterCard({
 
         {houseIcon && (
           <div className={styles.houseIcon}>
-            <Image
-              src={houseIcon}
-              alt={house}
-              width={28}
-              height={28}
-            />
+            <Image src={houseIcon} alt={house} width={28} height={28} />
           </div>
         )}
       </div>
 
-      {/* Conteúdo */}
       <div className={styles.content}>
         <header className={styles.cardHeader}>
           <h2 className={styles.name}>{name}</h2>
@@ -104,22 +104,17 @@ export default function CharacterCard({
 
         <ul className={styles.infoList}>
           <li>
-            <strong>Nascimento:</strong>{" "}
-            {formatDate(dateOfBirth)}
+            <strong>Nascimento:</strong> {formatDate(dateOfBirth)}
           </li>
           <li>
-            <strong>Patrono:</strong>{" "}
-            {patronus || "Não informado"}
+            <strong>Patrono:</strong> {patronus || "—"}
           </li>
           <li>
-            <strong>Ator/Atriz:</strong>{" "}
-            {actor || "Não informado"}
+            <strong>Ator/Atriz:</strong> {actor || "—"}
           </li>
         </ul>
 
-        <button className={styles.detailsBtn}>
-          Ver detalhes
-        </button>
+        <button className={styles.detailsBtn}>Ver detalhes</button>
       </div>
     </article>
   );
