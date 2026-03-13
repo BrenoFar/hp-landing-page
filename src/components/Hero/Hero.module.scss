@@ -7,15 +7,26 @@
   text-align: center;
   padding: $spacing-2xl $spacing-lg;
   background:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       rgba(5, 8, 22, 0.70) 0%,
-      rgba(5, 8, 22, 0.95) 100%
-    ),
+      rgba(5, 8, 22, 0.95) 100%),
     url('/images/hero-bg.jpg') center center / cover no-repeat;
   border-bottom: 1px solid $color-border;
 }
 
+.logoWrapper {
+  display: flex;
+  justify-content: center;
+  margin: $spacing-md 0;
+}
+
+.logo {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px rgba(212, 175, 55, 0.5));
+}
 
 // Estrelas animadas
 .stars {
@@ -31,24 +42,49 @@
   background: white;
   border-radius: 50%;
   opacity: 0;
-
-  // Anima cada estrela com delay diferente via CSS custom properties
-  // As posições são definidas inline no componente via style
   animation: twinkle 3s ease-in-out infinite;
 
-  &:nth-child(3n)   { animation-duration: 2s; }
-  &:nth-child(3n+1) { animation-duration: 4s; }
-  &:nth-child(3n+2) { animation-duration: 5s; }
+  &:nth-child(3n) {
+    animation-duration: 2s;
+  }
 
-  &:nth-child(4n)   { animation-delay: 0s; }
-  &:nth-child(4n+1) { animation-delay: 1s; }
-  &:nth-child(4n+2) { animation-delay: 2s; }
-  &:nth-child(4n+3) { animation-delay: 3s; }
+  &:nth-child(3n+1) {
+    animation-duration: 4s;
+  }
+
+  &:nth-child(3n+2) {
+    animation-duration: 5s;
+  }
+
+  &:nth-child(4n) {
+    animation-delay: 0s;
+  }
+
+  &:nth-child(4n+1) {
+    animation-delay: 1s;
+  }
+
+  &:nth-child(4n+2) {
+    animation-delay: 2s;
+  }
+
+  &:nth-child(4n+3) {
+    animation-delay: 3s;
+  }
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0; transform: scale(0.8); }
-  50%       { opacity: 0.8; transform: scale(1.2); }
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
 }
 
 // Símbolo decorativo
@@ -60,8 +96,15 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 // Conteúdo
