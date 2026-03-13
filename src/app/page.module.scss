@@ -11,89 +11,16 @@
   }
 }
 
-.grid {
+.housesGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: $spacing-lg;
 
   @include desktop {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @include tablet {
     grid-template-columns: repeat(2, 1fr);
   }
 
   @include mobile {
     grid-template-columns: 1fr;
   }
-}
-
-// Feedback (erro ou vazio)
-.feedback {
-  @include flex-center;
-  flex-direction: column;
-  gap: $spacing-sm;
-  padding: $spacing-2xl 0;
-  text-align: center;
-}
-
-.error {
-  color: $color-error;
-  font-size: $font-size-lg;
-}
-
-.empty {
-  font-size: $font-size-lg;
-  color: $color-text;
-}
-
-.emptyHint {
-  font-size: $font-size-sm;
-  color: $color-muted;
-}
-
-.houseSection {
-  margin-bottom: $spacing-2xl;
-}
-
-.houseHeader {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  padding: $spacing-md $spacing-lg;
-  border-left: 4px solid;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 0 $radius-md $radius-md 0;
-  margin-bottom: $spacing-lg;
-}
-
-.houseIconWrapper {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  @include flex-center;
-  flex-shrink: 0;
-}
-
-.houseHeaderIcon {
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
-}
-
-.houseTitle {
-  font-family: $font-title;
-  font-size: $font-size-xl;
-  flex: 1;
-
-  @include mobile {
-    font-size: $font-size-lg;
-  }
-}
-
-.houseCount {
-  font-size: $font-size-sm;
-  color: $color-muted;
-  white-space: nowrap;
 }
