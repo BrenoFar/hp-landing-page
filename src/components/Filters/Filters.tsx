@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import styles from "./Filters.module.scss";
+import ConfirmModal from "@/components/ConfirmModal/ConfirmModal";
 
 type Props = {
   search: string;
@@ -17,6 +21,9 @@ export default function Filters({
   total,
   filtered,
 }: Props) {
+  const [confirmVisible, setConfirmVisible] = useState(false);
+  const [pendingStatus, setPendingStatus] = useState<"alive" | "dead" | null>(null);
+
   const hasActiveFilter = search !== "" || status !== "all";
 
   function handleClear() {
@@ -24,53 +31,86 @@ export default function Filters({
     onStatusChange("all");
   }
 
+  function handleStatusChange(value: "all" | "alive" | "dead") {
+    if (value === "all") {
+      onStatusChange("all");
+      return;
+    }
+    // Guarda o valor pendente e abre confirmação
+    setPendingStatus(value);
+    setConfirmVisible(true);
+  }
+
+  function handleConfirm() {
+    if (pendingStatus) onStatusChange(pendingStatus);
+    setConfirmVisible(false);
+    setPendingStatus(null);
+  }
+
+  function handleCancel() {
+    setConfirmVisible(false);
+    setPendingStatus(null);
+  }
+
   return (
-    <section className={styles.wrapper}>
+    <>
+      <section className={styles.wrapper}>
 
-      {/* Busca */}
-      <div className={styles.searchWrapper}>
-        <input
-          type="text"
-          placeholder="Buscar por nome..."
-          value={search}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className={styles.searchInput}
-        />
-        {search && (
-          <button
-            className={styles.clearInput}
-            onClick={() => onSearchChange("")}
-            aria-label="Limpar busca"
-          >
-            ✕
-          </button>
-        )}
-      </div>
+        <div className={styles.row}>
 
-      {/* Status */}
-      <div className={styles.selects}>
-        <select
-          value={status}
-          onChange={(e) => onStatusChange(e.target.value as "all" | "alive" | "dead")}
-          className={`${styles.select} ${status !== "all" ? styles.active : ""}`}
-        >
-          <option value="all">Todos os status</option>
-          <option value="alive">Vivos</option>
-          <option value="dead">Falecidos</option>
-        </select>
+          {/* Busca */}
+          <div className={styles.searchWrapper}>
+            <input
+              type="text"
+              placeholder="Buscar por nome..."
+              value={search}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className={styles.searchInput}
+            />
+            {search && (
+              <button
+                className={styles.clearInput}
+                onClick={() => onSearchChange("")}
+                aria-label="Limpar busca"
+              >
+                ✕
+              </button>
+            )}
+          </div>
 
-        {hasActiveFilter && (
-          <button className={styles.clearAll} onClick={handleClear}>
-            Limpar filtros
-          </button>
-        )}
-      </div>
+          {/* Status */}
+          <div className={styles.selects}>
+            <select
+              value={status}
+              onChange={(e) => handleStatusChange(e.target.value as "all" | "alive" | "dead")}
+              className={`${styles.select} ${status !== "all" ? styles.active : ""}`}
+            >
+              <option value="all">Todos os status</option>
+              <option value="alive">Vivos</option>
+              <option value="dead">Falecidos</option>
+            </select>
 
-      {/* Contagem */}
-      <p className={styles.count}>
-        Exibindo <strong>{total}</strong> de <strong>{filtered}</strong> personagens
-      </p>
+            {hasActiveFilter && (
+              <button className={styles.clearAll} onClick={handleClear}>
+                Limpar filtros
+              </button>
+            )}
+          </div>
 
-    </section>
+        </div>
+
+        <p className={styles.count}>
+          Exibindo <strong>{total}</strong> de <strong>{filtered}</strong> personagens
+        </p>
+
+      </section>
+
+      {/* Modal de confirmação spoiler */}
+      <ConfirmModal
+        visible={confirmVisible}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+      />
+    </>
   );
 }
