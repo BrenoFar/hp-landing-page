@@ -4,9 +4,55 @@ import { Character } from "@/types/character";
 
 type Filters = {
   search: string;
-  house: string;
   status: "all" | "alive" | "dead";
 };
+
+export type HouseGroup = {
+  key: string;
+  label: string;
+  icon: string;
+  color: string;
+  characters: Character[];
+};
+
+// Configuração visual de cada grupo
+const GROUP_CONFIG: Record<string, { label: string; icon: string; color: string }> = {
+  Gryffindor: { label: "Gryffindor", icon: "/icons/gryffindor.svg",      color: "#ae0001" },
+  Slytherin:  { label: "Slytherin",  icon: "/icons/slytherin.svg",       color: "#1a472a" },
+  Hufflepuff: { label: "Hufflepuff", icon: "/icons/hufflepuff.svg",      color: "#ecb939" },
+  Ravenclaw:  { label: "Ravenclaw",  icon: "/icons/ravenclaw.svg",       color: "#0e1a40" },
+  staff:      { label: "Professores & Staff", icon: "/icons/deathly-hallows.svg", color: "#7c3aed" },
+  muggle:     { label: "Trouxas",    icon: "/icons/deathly-hallows.svg", color: "#6b7280" },
+  other:      { label: "Outros",     icon: "/icons/deathly-hallows.svg", color: "#374151" },
+};
+
+// Ordem de exibição dos grupos
+const GROUP_ORDER = [
+  "Gryffindor",
+  "Slytherin",
+  "Hufflepuff",
+  "Ravenclaw",
+  "staff",
+  "muggle",
+  "other",
+];
+
+// Determina em qual grupo o personagem se encaixa
+function resolveGroup(character: Character): string {
+  const { house, hogwartsStaff, species, wizard } = character;
+
+  // Tem casa → vai para a casa
+  if (house && GROUP_CONFIG[house]) return house;
+
+  // É staff/professor sem casa
+  if (hogwartsStaff) return "staff";
+
+  // É humano sem poderes mágicos → trouxa
+  if (species === "human" && wizard === false) return "muggle";
+
+  // Qualquer outro (criaturas, fantasmas sem casa, etc)
+  return "other";
+}
 
 export function useCharacters(filters: Filters) {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -18,23 +64,20 @@ export function useCharacters(filters: Filters) {
       try {
         const data = await fetchAllCharacters();
         setCharacters(data);
-      } catch (err) {
+      } catch {
         setError("Não foi possível carregar os personagens. Tente novamente.");
       } finally {
         setLoading(false);
       }
     }
-
     load();
   }, []);
 
+  // Aplica filtros de busca e status
   const filteredCharacters = useMemo(() => {
     return characters
       .filter((c) =>
         c.name.toLowerCase().includes(filters.search.toLowerCase().trim())
-      )
-      .filter((c) =>
-        filters.house === "all" ? true : c.house === filters.house
       )
       .filter((c) => {
         if (filters.status === "alive") return c.alive === true;
@@ -43,9 +86,30 @@ export function useCharacters(filters: Filters) {
       });
   }, [characters, filters]);
 
+  // Agrupa por casa/função
+  const groupedCharacters = useMemo(() => {
+    const groups: Record<string, Character[]> = {};
+
+    filteredCharacters.forEach((c) => {
+      const key = resolveGroup(c);
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(c);
+    });
+
+    // Retorna na ordem definida, sem grupos vazios
+    return GROUP_ORDER
+      .filter((key) => groups[key]?.length > 0)
+      .map((key) => ({
+        key,
+        ...GROUP_CONFIG[key],
+        characters: groups[key],
+      })) as HouseGroup[];
+  }, [filteredCharacters]);
+
   return {
-    characters: filteredCharacters,
-    totalCharacters: characters.length, // ← total sem filtro
+    groupedCharacters,
+    totalCharacters: characters.length,
+    filteredTotal: filteredCharacters.length,
     loading,
     error,
   };
