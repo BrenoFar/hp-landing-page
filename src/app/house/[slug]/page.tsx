@@ -124,7 +124,7 @@ export default function HousePage() {
                 priority={index < 4}
                 houseColor={groupConfig.color}
                 onClick={() => setSelectedCharacter(character)}
-                revealStatus={status !== "all"} // ← única linha adicionada
+                revealStatus={status !== "all"}
               />
             ))}
       </div>

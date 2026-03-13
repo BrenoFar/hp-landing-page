@@ -48,14 +48,14 @@ export const GROUPS: GroupConfig[] = [
     {
         key: "unaffiliated",
         label: "Bruxos Sem Casa",
-        icon: "/icons/deathly-hallows.svg",
+        icon: "/icons/wizards.png",
         color: "#df2323",
         description: "Bruxos e bruxas sem afiliação a nenhuma casa conhecida.",
     },
     {
         key: "muggle",
         label: "Trouxas",
-        icon: "/icons/deathly-hallows.svg",
+        icon: "/icons/muggle.png",
         color: "#c5c6c9",
         description: "Humanos sem habilidades mágicas.",
     },
