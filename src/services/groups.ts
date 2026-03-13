@@ -40,7 +40,7 @@ export const GROUPS: GroupConfig[] = [
     {
         key: "staff",
         label: "Corpo Docente",
-        icon: "/icons/deathly-hallows.svg",
+        icon: "/icons/staff.svg",
         color: "#7c3aed",
         description: "Professores, funcionários e guardiões de Hogwarts.",
     },
@@ -61,7 +61,7 @@ export const GROUPS: GroupConfig[] = [
     {
         key: "other",
         label: "Outros",
-        icon: "/icons/deathly-hallows.svg",
+        icon: "/icons/other.svg",
         color: "#6a7483",
         description: "Criaturas, fantasmas e demais seres do universo mágico.",
     },
@@ -69,18 +69,24 @@ export const GROUPS: GroupConfig[] = [
 
 // Resolve em qual grupo o personagem se encaixa
 export function resolveGroup(character: Character): string {
-    const { house, hogwartsStaff, hogwartsStudent, species, wizard } = character;
+  const { house, hogwartsStaff, species, wizard } = character;
 
-    if (hogwartsStaff) return "staff";
+  // Professor → sempre staff
+  if (hogwartsStaff) return "staff";
 
-    if (house) return house.toLowerCase();
+  // Não é humano → sempre Outros (fantasmas, criaturas, etc)
+  if (species !== "human") return "other";
 
-    if (wizard === true) return "unaffiliated";
+  // Humano com casa → vai para a casa
+  if (house) return house.toLowerCase();
 
-    if (species === "human" && wizard === false) return "muggle";
+  // Humano sem poderes mágicos → trouxa
+  if (wizard === false) return "muggle";
 
-    // 5. Todo o resto (criaturas, fantasmas, etc)
-    return "other";
+  // Humano bruxa/bruxo sem casa
+  if (wizard === true) return "unaffiliated";
+
+  return "other";
 }
 
 // Agrupa lista de personagens

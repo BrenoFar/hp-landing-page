@@ -41,19 +41,14 @@ const GROUP_ORDER = [
 function resolveGroup(character: Character): string {
   const { house, hogwartsStaff, species, wizard } = character;
 
- // É staff/professor sem casa
   if (hogwartsStaff) return "staff";
-
-  // Tem casa → vai para a casa
+  if (species !== "human") return "other";
   if (house && GROUP_CONFIG[house]) return house;
+  if (wizard === false) return "muggle";
+  if (wizard === true) return "unaffiliated";
 
-  // É humano sem poderes mágicos → trouxa
-  if (species === "human" && wizard === false) return "muggle";
-
-  // Qualquer outro (criaturas, fantasmas sem casa, etc)
   return "other";
 }
-
 export function useCharacters(filters: Filters) {
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(true);

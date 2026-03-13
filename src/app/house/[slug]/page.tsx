@@ -7,6 +7,7 @@ import { fetchAllCharacters } from "@/services/characters";
 import { GROUPS, resolveGroup } from "@/services/groups";
 import { Character } from "@/types/character";
 import CharacterCard from "@/components/CharacterCard/CharacterCard";
+import CharacterModal from "@/components/CharacterModal/CharacterModal";
 import SkeletonCard from "@/components/SkeletonCard/SkeletonCard";
 import Filters from "@/components/Filters/Filters";
 import styles from "./page.module.scss";
@@ -22,6 +23,7 @@ export default function HousePage() {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<"all" | "alive" | "dead">("all");
+  const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
 
   const groupConfig = GROUPS.find((g) => g.key === slug);
 
@@ -120,7 +122,8 @@ export default function HousePage() {
                 key={`${character.name}-${index}`}
                 character={character}
                 priority={index < 4}
-                houseColor={groupConfig.color} // ← fix: passa a cor do grupo
+                houseColor={groupConfig.color}
+                onClick={() => setSelectedCharacter(character)} 
               />
             ))}
       </div>
@@ -131,6 +134,15 @@ export default function HousePage() {
           <p className={styles.empty}>Nenhum personagem encontrado.</p>
           <p className={styles.emptyHint}>Tente ajustar os filtros.</p>
         </div>
+      )}
+
+      {/* Modal de detalhes */}
+      {selectedCharacter && (
+        <CharacterModal
+          character={selectedCharacter}
+          onClose={() => setSelectedCharacter(null)}
+          houseColor={groupConfig.color}
+        />
       )}
 
     </main>

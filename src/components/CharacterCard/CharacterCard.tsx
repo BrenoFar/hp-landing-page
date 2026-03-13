@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Character } from "@/types/character";
+import { formatDate } from "@/utils/format";
 import styles from "./CharacterCard.module.scss";
 
 type Props = {
@@ -67,9 +68,8 @@ export default function CharacterCard({
           </div>
         )}
 
-        {/* Ícone da casa sobre a imagem */}
         {houseIcon && (
-          <div className={styles.houseIcon}> {/* ← sem houseClass */}
+          <div className={styles.houseIcon}>
             <Image
               src={houseIcon}
               alt={house}
@@ -105,7 +105,7 @@ export default function CharacterCard({
         <ul className={styles.infoList}>
           <li>
             <strong>Nascimento:</strong>{" "}
-            {dateOfBirth || "Não informado"}
+            {formatDate(dateOfBirth)}
           </li>
           <li>
             <strong>Patrono:</strong>{" "}
