@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react"; // ← useEffect adicionado
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Character } from "@/types/character";
 import { formatDate } from "@/utils/format";
+import { t, patronusNames } from "@/utils/translations";
 import styles from "./CharacterCard.module.scss";
 
 type Props = {
@@ -32,7 +33,6 @@ export default function CharacterCard({
 
   const [revealed, setRevealed] = useState(revealStatus);
 
-  // Sincroniza quando o filtro muda na página pai
   useEffect(() => {
     setRevealed(revealStatus);
   }, [revealStatus]);
@@ -47,7 +47,6 @@ export default function CharacterCard({
       tabIndex={0}
       style={{ "--card-color": houseColor } as React.CSSProperties}
     >
-
       <div className={styles.imageWrapper}>
         {image ? (
           <Image
@@ -107,7 +106,7 @@ export default function CharacterCard({
             <strong>Nascimento:</strong> {formatDate(dateOfBirth)}
           </li>
           <li>
-            <strong>Patrono:</strong> {patronus || "—"}
+            <strong>Patrono:</strong> {patronus ? t(patronusNames, patronus) : "—"}
           </li>
           <li>
             <strong>Ator/Atriz:</strong> {actor || "—"}

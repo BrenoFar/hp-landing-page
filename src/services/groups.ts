@@ -1,4 +1,5 @@
 import { Character } from "@/types/character";
+import { houseNames } from "@/utils/translations"; // ← import
 
 export type GroupConfig = {
     key: string;
@@ -11,28 +12,28 @@ export type GroupConfig = {
 export const GROUPS: GroupConfig[] = [
     {
         key: "gryffindor",
-        label: "Gryffindor",
+        label: houseNames["Gryffindor"], 
         icon: "/icons/gryffindor.svg",
         color: "#e64a19",
         description: "Coragem, bravura, nervos de aço e cavalheirismo.",
     },
     {
         key: "slytherin",
-        label: "Slytherin",
+        label: houseNames["Slytherin"], 
         icon: "/icons/slytherin.svg",
         color: "#25a69a",
         description: "Astúcia, ambição, liderança e desenvoltura.",
     },
     {
         key: "hufflepuff",
-        label: "Hufflepuff",
+        label: houseNames["Hufflepuff"], 
         icon: "/icons/hufflepuff.svg",
         color: "#ecb939",
         description: "Trabalho duro, dedicação, paciência e lealdade.",
     },
     {
         key: "ravenclaw",
-        label: "Ravenclaw",
+        label: houseNames["Ravenclaw"], 
         icon: "/icons/ravenclaw.svg",
         color: "#7986cb",
         description: "Inteligência, criatividade, aprendizado e sabedoria.",
@@ -67,32 +68,19 @@ export const GROUPS: GroupConfig[] = [
     },
 ];
 
-// Resolve em qual grupo o personagem se encaixa
 export function resolveGroup(character: Character): string {
-  const { house, hogwartsStaff, species, wizard } = character;
+    const { house, hogwartsStaff, species, wizard } = character;
 
-  // Professor → sempre staff
-  if (hogwartsStaff) return "staff";
+    if (hogwartsStaff) return "staff";
+    if (species !== "human") return "other";
+    if (house) return house.toLowerCase();
+    if (wizard === false) return "muggle";
+    if (wizard === true) return "unaffiliated";
 
-  // Não é humano → sempre Outros (fantasmas, criaturas, etc)
-  if (species !== "human") return "other";
-
-  // Humano com casa → vai para a casa
-  if (house) return house.toLowerCase();
-
-  // Humano sem poderes mágicos → trouxa
-  if (wizard === false) return "muggle";
-
-  // Humano bruxa/bruxo sem casa
-  if (wizard === true) return "unaffiliated";
-
-  return "other";
+    return "other";
 }
 
-// Agrupa lista de personagens
-export function groupCharacters(
-    characters: Character[]
-): Record<string, Character[]> {
+export function groupCharacters(characters: Character[]): Record<string, Character[]> {
     const groups: Record<string, Character[]> = {};
 
     characters.forEach((c) => {

@@ -5,6 +5,17 @@ import { Character } from "@/types/character";
 import styles from "./CharacterModal.module.scss";
 import { useEffect } from "react";
 import { formatDate, formatWandLength } from "@/utils/format";
+import {
+  t,
+  houseNames,
+  speciesNames,
+  ancestryNames,
+  eyeColours,
+  hairColours,
+  patronusNames,
+  wandWoods,
+  wandCores,
+} from "@/utils/translations";
 
 type Props = {
   character: Character | null;
@@ -88,10 +99,12 @@ export default function CharacterModal({ character, onClose, houseColor = "#c9a8
             <div className={styles.header}>
               <h2 className={styles.name}>{name}</h2>
               <div className={styles.tags}>
-                {house && <span className={styles.tag}>{house}</span>}
+                {house && (
+                  <span className={styles.tag}>{t(houseNames, house)}</span>
+                )}
                 {role && <span className={styles.tag}>{role}</span>}
                 {species && species !== "human" && (
-                  <span className={styles.tag}>{species}</span>
+                  <span className={styles.tag}>{t(speciesNames, species)}</span>
                 )}
               </div>
             </div>
@@ -101,8 +114,8 @@ export default function CharacterModal({ character, onClose, houseColor = "#c9a8
               <h3 className={styles.sectionTitle}>Identidade</h3>
               <ul className={styles.infoList}>
                 <li><strong>Nascimento:</strong> {formatDate(dateOfBirth)}</li>
-                <li><strong>Ancestralidade:</strong> {ancestry || "—"}</li>
-                <li><strong>Espécie:</strong> {species || "—"}</li>
+                <li><strong>Ancestralidade:</strong> {ancestry ? t(ancestryNames, ancestry) : "—"}</li>
+                <li><strong>Espécie:</strong> {species ? t(speciesNames, species) : "—"}</li>
               </ul>
             </section>
 
@@ -110,8 +123,8 @@ export default function CharacterModal({ character, onClose, houseColor = "#c9a8
             <section className={styles.section}>
               <h3 className={styles.sectionTitle}>Aparência</h3>
               <ul className={styles.infoList}>
-                <li><strong>Olhos:</strong> {eyeColour || "—"}</li>
-                <li><strong>Cabelo:</strong> {hairColour || "—"}</li>
+                <li><strong>Olhos:</strong> {eyeColour ? t(eyeColours, eyeColour) : "—"}</li>
+                <li><strong>Cabelo:</strong> {hairColour ? t(hairColours, hairColour) : "—"}</li>
               </ul>
             </section>
 
@@ -119,7 +132,7 @@ export default function CharacterModal({ character, onClose, houseColor = "#c9a8
             {patronus && (
               <section className={styles.section}>
                 <h3 className={styles.sectionTitle}>Patrono</h3>
-                <p className={styles.patronus}>{patronus}</p>
+                <p className={styles.patronus}>{t(patronusNames, patronus)}</p>
               </section>
             )}
 
@@ -128,8 +141,8 @@ export default function CharacterModal({ character, onClose, houseColor = "#c9a8
               <section className={styles.section}>
                 <h3 className={styles.sectionTitle}>Varinha</h3>
                 <ul className={styles.infoList}>
-                  {wand.wood && <li><strong>Madeira:</strong> {wand.wood}</li>}
-                  {wand.core && <li><strong>Núcleo:</strong> {wand.core}</li>}
+                  {wand.wood && <li><strong>Madeira:</strong> {t(wandWoods, wand.wood)}</li>}
+                  {wand.core && <li><strong>Núcleo:</strong> {t(wandCores, wand.core)}</li>}
                   {wand.length && <li><strong>Tamanho:</strong> {formatWandLength(wand.length)}</li>}
                 </ul>
               </section>
