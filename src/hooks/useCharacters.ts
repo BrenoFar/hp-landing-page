@@ -41,11 +41,11 @@ const GROUP_ORDER = [
 function resolveGroup(character: Character): string {
   const { house, hogwartsStaff, species, wizard } = character;
 
+ // É staff/professor sem casa
+  if (hogwartsStaff) return "staff";
+
   // Tem casa → vai para a casa
   if (house && GROUP_CONFIG[house]) return house;
-
-  // É staff/professor sem casa
-  if (hogwartsStaff) return "staff";
 
   // É humano sem poderes mágicos → trouxa
   if (species === "human" && wizard === false) return "muggle";
