@@ -1,0 +1,173 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  @include flex-center;
+  padding: $spacing-lg;
+  animation: fadeIn $transition-fast ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal {
+  background: $color-card;
+  border-radius: $radius-lg;
+  border: 1px solid color-mix(in srgb, var(--modal-color) 40%, transparent);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp $transition-base ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.closeBtn {
+  position: absolute;
+  top: $spacing-md;
+  right: $spacing-md;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid $color-border;
+  color: $color-muted;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  @include flex-center;
+  z-index: 1;
+  transition: background $transition-fast, color $transition-fast;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: $color-text;
+  }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+
+  @media (max-width: $bp-tablet) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Coluna da imagem
+.imageCol {
+  position: relative;
+  min-height: 360px;
+  background: #0a1020;
+  border-radius: $radius-lg 0 0 $radius-lg;
+  overflow: hidden;
+
+  @media (max-width: $bp-tablet) {
+    min-height: 260px;
+    border-radius: $radius-lg $radius-lg 0 0;
+  }
+}
+
+.photo {
+  object-fit: cover;
+  object-position: top center;
+}
+
+.noPhoto {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-sm;
+  height: 100%;
+  color: $color-muted;
+  font-size: $font-size-sm;
+}
+
+// Coluna dos dados
+.dataCol {
+  padding: $spacing-xl $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding-right: $spacing-xl; // espaço pro botão fechar
+}
+
+.name {
+  font-family: $font-title;
+  font-size: $font-size-xl;
+  color: $color-text;
+  font-weight: 700;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+}
+
+.tag {
+  padding: 2px $spacing-sm;
+  border-radius: $radius-pill;
+  font-size: $font-size-sm;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--modal-color) 15%, transparent);
+  color: var(--modal-color);
+  border: 1px solid color-mix(in srgb, var(--modal-color) 35%, transparent);
+}
+
+// Seções
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.sectionTitle {
+  font-family: $font-title;
+  font-size: $font-size-sm;
+  color: var(--modal-color);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid color-mix(in srgb, var(--modal-color) 25%, transparent);
+  padding-bottom: $spacing-xs;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  li {
+    font-size: $font-size-sm;
+    color: $color-muted;
+
+    strong {
+      color: $color-text;
+      font-weight: 600;
+    }
+  }
+}
+
+.patronus {
+  font-size: $font-size-base;
+  color: $color-text;
+  text-transform: capitalize;
+}
