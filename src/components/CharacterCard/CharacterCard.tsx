@@ -1,12 +1,16 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { Character } from "@/types/character";
 import styles from "./CharacterCard.module.scss";
 
 type Props = {
   character: Character;
+  priority?: boolean;
+  onClick?: () => void;
 };
 
-// Mapeia a casa para a classe CSS correta
 const houseClassMap: Record<string, string> = {
   Gryffindor: "gryffindor",
   Slytherin: "slytherin",
@@ -14,22 +18,23 @@ const houseClassMap: Record<string, string> = {
   Ravenclaw: "ravenclaw",
 };
 
-export default function CharacterCard({ character }: Props) {
-  const {
-    name,
-    image,
-    dateOfBirth,
-    house,
-    patronus,
-    actor,
-    alive,
-  } = character;
+const houseIconMap: Record<string, string> = {
+  Gryffindor: "/icons/gryffindor.svg",
+  Slytherin: "/icons/slytherin.svg",
+  Hufflepuff: "/icons/hufflepuff.svg",
+  Ravenclaw: "/icons/ravenclaw.svg",
+};
+
+export default function CharacterCard({ character, priority = false, onClick }: Props) {
+  const { name, image, dateOfBirth, house, patronus, actor, alive } = character;
+
+  const [revealed, setRevealed] = useState(false);
 
   const houseClass = houseClassMap[house] ?? null;
-  const statusLabel = alive ? "Vivo" : "Falecido";
+  const houseIcon = houseIconMap[house] ?? null;
 
   return (
-    <article className={styles.card}>
+    <article className={styles.card} onClick={onClick} role="button" tabIndex={0}>
 
       {/* Imagem do personagem */}
       <div className={styles.imageWrapper}>
@@ -40,34 +45,60 @@ export default function CharacterCard({ character }: Props) {
             fill
             sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
             className={styles.image}
+            priority={priority}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = "none";
+            }}
           />
         ) : (
           <div className={styles.placeholder}>
-            <span>🧙</span>
+            <Image
+              src="/icons/deathly-hallows.svg"
+              alt="Sem imagem"
+              width={60}
+              height={60}
+              className={styles.placeholderIcon}
+            />
             <p>Sem imagem</p>
+          </div>
+        )}
+
+        {/* Ícone da casa sobre a imagem */}
+        {houseIcon && (
+          <div className={`${styles.houseIcon} ${houseClass ? styles[houseClass] : ""}`}>
+            <Image
+              src={houseIcon}
+              alt={house}
+              width={28}
+              height={28}
+            />
           </div>
         )}
       </div>
 
-      {/* Conteúdo do card */}
+      {/* Conteúdo */}
       <div className={styles.content}>
-
-        {/* Nome + status */}
         <header className={styles.cardHeader}>
           <h2 className={styles.name}>{name}</h2>
-          <span className={`${styles.status} ${alive ? styles.alive : styles.dead}`}>
-            {statusLabel}
-          </span>
+
+          {/* Badge spoiler com animação de reveal */}
+          <button
+            className={`${styles.spoiler} ${revealed ? (alive ? styles.alive : styles.dead) : ""}`}
+            onClick={(e) => {
+              e.stopPropagation(); // evita abrir o modal ao clicar no spoiler
+              setRevealed((prev) => !prev);
+            }}
+            aria-label={revealed ? (alive ? "Vivo" : "Falecido") : "Revelar status"}
+          >
+            <span className={`${styles.spoilerInner} ${revealed ? styles.revealed : ""}`}>
+              <span className={styles.spoilerFront}>Spoiler</span>
+              <span className={styles.spoilerBack}>
+                {alive ? "Vivo" : "Falecido"}
+              </span>
+            </span>
+          </button>
         </header>
 
-        {/* Badge da casa */}
-        {house && (
-          <span className={`${styles.houseBadge} ${houseClass ? styles[houseClass] : ""}`}>
-            {house}
-          </span>
-        )}
-
-        {/* Informações */}
         <ul className={styles.infoList}>
           <li>
             <strong>Nascimento:</strong>{" "}
@@ -83,6 +114,9 @@ export default function CharacterCard({ character }: Props) {
           </li>
         </ul>
 
+        <button className={styles.detailsBtn}>
+          Ver detalhes
+        </button>
       </div>
     </article>
   );
